@@ -19,7 +19,7 @@ const showListH = function renderListOfBooksHeader() {
   $('.content').remove();
   let listofbooksHeader='';
   listofbooksHeader = '<div class="col-12"><div class="boxshadow"><div class="boxtitle booklisttitle"><div class="title-style"><div class="slidedown"></div>' + 
-                      '<div title="othertitle"><div class="appicons"><i class="fas fa-kiwi-bird"></i></div><div class="titleverbage"><span class="titlewords">' + 
+                      '<div title="othertitle"><div class="titleverbage"><span class="titlewords">' + 
                       'Select one of the following books to get more information</span></div><p><div class="nextlist js-nextlist">More books</div></div></div></div>';
   $('.row:nth-of-type(2)').append('<div class="content">');
   $('.content').append(listofbooksHeader);
@@ -31,7 +31,7 @@ const showBookH = function renderSelectedBookHeader() {
   let selectedbookHeaderHtml = '';
   $('.content').remove();
   selectedbookHeaderHtml = '<div class="col-12"><div class="boxshadow"><div class="boxtitle booklisttitle" ><div class="title-style"><div class="slidedown"></div>' + 
-                          '<div class="othertitle"><div class="appicons"><i class="fas fa-kiwi-bird"></i></div><div class="titleverbage"><span class="titlewords">' + 
+                          '<div class="othertitle"><div class="titleverbage"><span class="titlewords">' + 
                           'Overview of the book you selected<span></div><p><div class="back-to-list js-back-to-list">Back to List</div></div></div></div>';
   $('.row:nth-of-type(2)').append('<div class="content">');
   $('.content').append(selectedbookHeaderHtml);
@@ -43,8 +43,8 @@ const showYtH = function renderYoutubeHeader() {
   $('.boxshadow').first().append('<div class="col-4"><div class="js-youtube"></div></div>');
   let youtubeHeaderHtml = '';
   youtubeHeaderHtml = '<div class="boxtitle youtubetitle"><div class="title-style"><div class="slidedown sdyoutube"><i id="youtubeangledown" class="fas fa-angle-double-down" aria-hidden="true" ></i>' + 
-                      '<i id="youtubeangleup" class=" fas fa-angle-double-up" aria-hidden="true" style="display:none" ></i></div><div class="othertitle"><div class="appicons"><i class="fas fa-handshake"></i>' + 
-                      '</div><div class="titleverbage"><span class="titlewords">Videos on Author or Title</span></div><p><div class="nextyt js-nextyt">More results</div></div></div></div>';
+                      '<i id="youtubeangleup" class=" fas fa-angle-double-up" aria-hidden="true" style="display:none" ></i></div><div class="othertitle">' + 
+                      '<div class="titleverbage"><span class="titlewords">Videos on Author or Title</span></div><p><div class="nextyt js-nextyt">More results</div></div></div></div>';
   $('.js-youtube').append(youtubeHeaderHtml);
 }
 
@@ -53,8 +53,8 @@ const showNewsH = function renderNewsHeader() {
   $('.boxshadow').first().append('<div class="col-4"><div class="js-news"></div></div>');
   let newsHeaderHtml = '';
   newsHeaderHtml = '<div class="boxtitle newstitle"><div class="title-style"><div class="slidedown sdnews"><i id="newsangledown" class="fas fa-angle-double-down" aria-hidden="true" ></i>' + 
-                  '<i id="newsangleup" class=" fas fa-angle-double-up" aria-hidden="true" style="display:none" ></i></div><div class="othertitle"><div class="appicons"><i class="fas fa-star"></i>' + 
-                  '</div><div class="titleverbage"><span class="titlewords">News on Author or Title</span></div><p><div class="nextnews js-nextnews">More results</div></div></div></div>';
+                  '<i id="newsangleup" class=" fas fa-angle-double-up" aria-hidden="true" style="display:none" ></i></div><div class="othertitle">' + 
+                  '<div class="titleverbage"><span class="titlewords">News on Author or Title</span></div><p><div class="nextnews js-nextnews">More results</div></div></div></div>';
   $('.js-news').append(newsHeaderHtml);
 }
 //Render Wiki header
@@ -62,8 +62,8 @@ const showWikiH = function renderWikiHeader() {
   $('.boxshadow').first().append('<div class="col-4"><div class="js-wiki"></div></div>');
   let newsWikiHtml = '';
   wikiHeaderHtml = '<div class="boxtitle wikititle"><div class="title-style"><div class="slidedown sdwiki"><i id="wikiangledown" class="fas fa-angle-double-down" aria-hidden="true" ></i>' + 
-                   '<i id="wikiangleup" class=" fas fa-angle-double-up" aria-hidden="true" style="display:none" ></i></div><div class="othertitle"><div class="appicons"><i class="fas fa-certificate"></i>' + 
-                   '</div><div class="titleverbage"><span class="titlewords">Wiki Details on Author</span></div></div></div></div>';
+                   '<i id="wikiangleup" class=" fas fa-angle-double-up" aria-hidden="true" style="display:none" ></i></div><div class="othertitle">' + 
+                   '<div class="titleverbage"><span class="titlewords">Wiki Details on Author</span></div></div></div></div>';
   $('.js-wiki').append(wikiHeaderHtml);
 }
 
@@ -246,7 +246,7 @@ const showWiki = function renderWikiData(authorData) {
   if (pageId =='-1' ) {
     wikiHtml += '<div class="wikiitem"><div class="headerinfo"><div class="wikimessage">There is no Wikipedia information on this author.</div></div>';
   } else {
-    console.log(authorData);
+    //console.log(authorData);
     if (typeof(authorData.pages[pageId].thumbnail) =='undefined' || authorData.pages[pageId].thumbnail === null) {
       wikiThumbSource = 'There is no image for this author';
     } else {
@@ -264,17 +264,40 @@ const showWiki = function renderWikiData(authorData) {
 
 //*****Calls to the APIs
 
+//format the params
+function formatQueryParams(params) {
+  const queryItems = Object.keys(params)
+    .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
+  return queryItems.join('&');
+}
+
+
 //AJAX call for list of Google Books
 const googleList = function getGoogleBooksAPIData(userSelectedSearchTerm) {
       const params = {
         q: `"${userSelectedSearchTerm}"`,
         key: 'AIzaSyBpAvj7qUWfzUvniX__WEqh8iN5AUphs6s',
       }
-      $.getJSON(googleBooksURL, params, function(data){
-        let dataId='';
-        showListH();
-        showList(data);
-      });
+
+      const googleQueryStr = formatQueryParams(params);
+      const googleUrl = googleBooksURL + '?' + googleQueryStr;
+
+      fetch(googleUrl)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(response.text);
+        })
+        .then(googleJsonResp => {
+          //console.log(`this is the new fetch ${JSON.stringify(googleJsonResp)}`);
+          showListH();
+          showList(googleJsonResp);
+        })
+        .catch(err => {
+          $('#js-error-message').text(`something went terribly wrong:  ${err.message}`)
+        });
+
 } 
 
 //AJAX call to Google Books for next set of data
@@ -282,32 +305,74 @@ const listNext = function getGoogleBooksAPINextList(userSelectedSearchTerm) {
   state.googleStartIndex += 10;
   const params = {
     q: `"${userSelectedSearchTerm}"`,
-        key: 'AIzaSyBpAvj7qUWfzUvniX__WEqh8iN5AUphs6s',
-        startIndex: state.googleStartIndex,
+    key: 'AIzaSyBpAvj7qUWfzUvniX__WEqh8iN5AUphs6s',
+    startIndex: state.googleStartIndex,
+    }
+
+  const googleQueryStr = formatQueryParams(params);
+  const googleUrl = googleBooksURL + '?' + googleQueryStr;
+
+  fetch(googleUrl)
+    .then(response => {
+      if (response.ok) {
+        return response.json();
       }
-  $.getJSON(googleBooksURL, params, function(data){
-    console.log(state.googleStartIndex);
-    showListH();
-    showList(data);
-  });  
+      throw new Error(response.text);
+    })
+    .then(googleJsonResp => {
+      //console.log(`this is another fetch ${JSON.stringify(googleJsonResp)}`);
+      showListH();
+      showList(googleJsonResp);
+    })
+    .catch (err => {
+      $('#js-error-message').text(`Something went terribly wrong: ${err.message}`);
+    });
+
 }
 
 //AJAX call to Google Books for Selected Book
 const googleBook = function getSelectedGoogleBookAPIData(book) {
-      const params = {
-        volumeId: `"${book}"`,
-        projection: 'full',
-      }
-      let singleBookURL = googleBooksURL + '/' + book + '?key=AIzaSyBpAvj7qUWfzUvniX__WEqh8iN5AUphs6s';
-      $.getJSON(singleBookURL, function(selectedBookData){
-        userSelectedAuthor = selectedBookData.volumeInfo.authors;
-        showBookH();
-        showBook(selectedBookData);
-        nextPageToken = selectedBookData.nextPageToken;
-        showYtH();
-        showNewsH();
-        showWikiH();
+    const params = {
+      volumeId: `"${book}"`,
+      projection: 'full',
+    }
+
+    //const googleQueryStr = formatQueryParams(params);
+    const singleBookUrl = googleBooksURL + '/' + book + '?key=AIzaSyBpAvj7qUWfzUvniX__WEqh8iN5AUphs6s';
+    console.log(singleBookUrl);
+/*
+    fetch(singleBookUrl, {
+        method: 'GET',
+        headers: {
+        "Accept": "application/json",
+        'Content-Type': 'application/json'
+        }
+      })
+      .then(response => {
+        if (response.ok) {
+          return response.json;
+        }
+        throw new Error(response.text);
+      })
+      .then (singleBookJsonResp => {
+        console.log($(JSON.stringify(singleBookJsonResp.data)));
+      })
+      .catch (err => {
+        $('#js-error-message').text(`Something went terribly wrong with the single book selection: ${err.message}`);
       });
+
+*/
+
+
+    $.getJSON(singleBookUrl, function(selectedBookData){
+      userSelectedAuthor = selectedBookData.volumeInfo.authors;
+      showBookH();
+      showBook(selectedBookData);
+      nextPageToken = selectedBookData.nextPageToken;
+      showYtH();
+      showNewsH();
+      showWikiH();
+    });
 }
 
 //call to Youtube for videos
@@ -319,10 +384,25 @@ const getYt = function getYouTubeAPIData(userSelectedSearchTerm) {
         maxResults: 3,
         videoID:'id'
       }
-      $.getJSON(youtubeURL, ytParams, function(data){
-        showYt(data);
-        state.youtubePageToken = data.nextPageToken;
-      }); 
+
+      const ytQueryStr = formatQueryParams(ytParams);
+      const ytUrl = youtubeURL + '?' + ytQueryStr;
+
+      fetch(ytUrl)
+        .then(response => {
+          if (response.ok) {
+            return response.json();
+          }
+          throw new Error(response.text);
+        })
+        .then(ytJsonResp => {
+          //console.log(JSON.stringify(ytJsonResp));
+          showYt(ytJsonResp);
+          state.youtubePageToken = data.nextPageToken;
+        })
+        .catch(err => {
+          $('#js-error-message').text(`Something went wrong with the youtube:  ${err.message}`);
+        });
 }
 
 //AJAX call to News for articles
@@ -334,34 +414,62 @@ const getNews = function getNewsAPIData(userSelectedSearchTerm) {
         pagesize: 5,
         language: 'en'
         }
-      $.getJSON(newsURL, params, function(data){
-        showNews(data);
-        state.newsNextPage++;
-      });  
+
+      const newsQueryStr = formatQueryParams(params);
+      const newsUrl = newsURL + '?' + newsQueryStr;
+
+      fetch(newsUrl)
+        .then(response => {
+          if(response.ok) {
+            return response.json();
+          }
+          throw new Error(response.text);
+        })
+        .then (newsJsonResp => {
+          //console.log(JSON.stringify(newsJsonResp));
+          showNews(newsJsonResp);
+          state.newsNextPage++;
+        })
+        .catch(err => {
+          $('#js-error-message').text(`Something went wrong with the news:  ${err.message}`);
+        });
+      
 }
 
 //AJAX call to Wikipedia API
 const getWiki = function getWikiAPIData() {
-      const wikiParams = {
+      const params = {
         titles: `${selAuthor}`,
         origin: '*',
         action: 'query',
         format: 'json',
         prop: 'extracts|pageimages',
         indexpageids: 1,
-        //redirects: 1, 
         exchars: 1200,
-        // explaintext: 1,
-        //exsectionformat: 'plain',
         piprop: 'name|thumbnail|original',
         pithumbsize: 250
       };
-      $.getJSON(wikiURL, wikiParams, function(data) {
-        console.log(data);
-          showWiki(data.query)
-      });
+
+      const wikiQueryStr = formatQueryParams(params);
+      const wikiUrl = wikiURL + '?' + wikiQueryStr;
+
+      fetch(wikiUrl)
+        .then(response => {
+          if(response.ok) {
+            return response.json();
+          }
+          throw new Error(response.text);
+        })
+        .then(wikiJsonResp => {
+          //console.log(JSON.stringify(wikiJsonResp));
+          showWiki(wikiJsonResp.query)
+        })
+        .catch(err => {
+          $('#js-error-message').text(`Something went wrong with the news:  ${err.message}`);
+        });
+
 }
-//AJAX call to Wiki for next set of data
+//AJAX call to News for next set of data
 const newsNext = function getNewsDataNextPage(userSelectedSearchTerm) {
   const params = {
     q: `"${selAuthor}" OR "${selBookTitle}"`,
@@ -371,10 +479,29 @@ const newsNext = function getNewsDataNextPage(userSelectedSearchTerm) {
     language: 'en',
     page: state.newsNextPage
     }
-  $.getJSON(newsURL, params, function(data){
-    showNews(data);
+    console.log('current page is ' + params.page);
+
+  const newsNextQueryStr = formatQueryParams(params);
+  const newsNextUrl = newsURL + '?' + newsNextQueryStr;
+  console.log(newsNextUrl);
+
+  fetch(newsNextUrl)
+    .then(response => {
+      if(response.ok) {
+        return response.json();
+      }
+      throw new Error(response.text);
+    })
+    .then(newsNextJsonResp => {
+      //console.log(JSON.stringify(newsNextJsonResp));
+      showNews(newsNextJsonResp);
+    })
+    .catch(err => {
+      $('#js-error-message').text(`Something went wrong with the news:  ${err.message}`);
+    });
+
     state.newsNextPage++;
-  });  
+    console.log('after updating newsNextPage, page is ' + state.newsNextPage);
 }
 
 //AJAX call to Youtube for next set of data
@@ -387,20 +514,40 @@ const ytNext = function getYoutubeDataNextPage(userSelectedSearchTerm){
     videoID:'id',
     pageToken: state.youtubePageToken
   }
-  $.getJSON(youtubeURL, params, function(data){
-    showYt(data);
-    state.youtubePageToken = data.nextPageToken;
-  });
+
+  const ytQueryStr = formatQueryParams(params);
+  const ytNextUrl = youtubeURL + '?' + ytQueryStr;
+
+  fetch (ytNextUrl)
+    .then(response => {
+      if (response.ok) {
+        return response.json;
+      }
+      throw new Error(response.text);
+    })
+    .then(ytNextJsonResp => {
+      console.log(JSON.stringify(ytNextJsonResp));
+      //showYt(ytNextJsonResp);
+    })
+    .catch (err => {
+      $('#js-error-message').text(`something went terribly wrong with the Youtube Next data:  ${err.message}`);
+    });
+
+    //state.youtubePageToken = data.nextPageToken;
+    //console.log(state.youtubePageToken);
+
+
+  //$.getJSON(youtubeURL, params, function(data){
+  //  showYt(data);
+   // state.youtubePageToken = data.nextPageToken;
+  //});
 }
 
 /* Event listeners */
 
 function watchSubmit() {
 //suggestions for submission text input
-  let searchEx = [ 'Want some suggestions?', 'David Grann', 'Jane Eyre', 'Radium Girls', 'William Shakespeare', 'Shakespeare', 'Louisa May Alcott', 'Jack London', 'Harry Potter', 'J. K. Rowling', 'Margaret Atwood', 'Lord of the Flies', 'America"s Cup', 'The Poisonwood Bible' ];
-  setInterval(function() {
-    $('input#js-searchfield').attr('placeholder', searchEx[searchEx.push(searchEx.shift())-1]);
-  }, 3000);
+  
 
   //listener for input from user; on submit or click, bring up list of associated books
   $('#js-inputform').submit(function(e){
@@ -414,7 +561,7 @@ function watchSubmit() {
   //get next set of books
   $(document).on('click','.js-nextlist', (function(event){
     event.preventDefault();
-    console.log('event listener is working');
+    //console.log('event listener is working');
     listNext(userSelectedSearchTerm);
   }));
 

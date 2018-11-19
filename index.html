@@ -3,56 +3,68 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>getTheBook</title>
+  <title>getTheBook 1</title>
+  <meta name="author" content="Missy Maloney">
+  <meta name="description" content="Select a the best book for your bookclub.">
+  <meta name="keywords" content="books, Thinkful">
+  <meta property="og:title" content="getTheBook.co" />  
+  <meta property="og:image" content="/images/getTheBook_bkgrd.jpeg" />
+  <meta property="og:description" content="Select a the best book for your bookclub." />
+  
   <!-- Responsive viewport tag, tells small screens that it's responsive-->
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <!-- Link to main css file-->
+  <!-- Normalize.css, a cross-browser reset file-->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/4.2.0/normalize.min.css">
+  
+  <!-- Google Font-->
+  <link href="https://fonts.googleapis.com/css?family=Cormorant+Garamond" rel="stylesheet">
+  <!-- Fontawesome icons -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+  
+  <!-- Stylesheets-->
   <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="normalize.css">
   <link rel="stylesheet" href="responsive.css">
 
+  <!-- AddToAny Share buttons -->
+  <script async src="https://static.addtoany.com/menu/page.js"></script>
 </head>
 <body>
   <div id="wrapper">
 
-  <header role="banner">  
-      <h1 class="tagline">Select the best book for your bookclub.</h1>
-  </header>
-  <br>
-  <br>
-  <main role="main">
-
-  <section role="region">
-    <div class="row">
-      <div class="col-12">
-          <form id="js-inputform">
-            <h4 > Check by Author, Title or Subject</h4><br>
-            <input type="text" id="js-searchfield" name="searchfield" placeholder="Book Title.." autofocus required spellcheck="true">
-              <input type="submit"  class="get-the-book-btn">
-                  getTheBook</input>
-          </form>
-          <br>
-            <div class="verbage">
-                <h3>After being presented with a list of books based on your selection, choose one.  You will be shown information on the book, the price, and articles and videos on the book, author or topic.</h3>
-                <div id='js-error-message'></div>
+  <header>
+        <div class="row">
+          <div class="col-12">
+            <div class="tophalf">
+              <h1 class="tagline">Select the best book for your bookclub.</h1>
+              <form id="js-inputform">
+                <h4 > Check by Author, Title or Subject</h4> 
+                <input id="js-searchfield" type="text" value="Jack London" name="searchfield"  autofocus required spellcheck="true"><br>
+                  <button class="get-the-book-btn" type="submit">
+                      getTheBook</button>
+              </form>
             </div>
-      </div>
-    </div>
-  </section>
+            <div class="definition">
+                  <div class="verbage">
+                      After being presented with a list of books based on your selection, choose one.  You will be shown information on the book, the price, and articles and videos on the book, author or topic.
+                  </div>
+                  <div id='js-error-message'></div>
+            </div>
+          </div>
+        </div>
+  </header>
 
-  <section role="region">
+  <main>
     <div class="row">
-      <div class='content'>
-      </div>
     </div>  
 
     <div class="row">
   </div>
-
-</section>
   </main>
 
-    <footer role="contentinfo">
+    <footer>
+      
     </footer>
      
   </div>
