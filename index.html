@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>getTheBook</title>
+  <!-- Responsive viewport tag, tells small screens that it's responsive-->
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Link to main css file-->
+  <link rel="stylesheet" href="index.css">
+  <link rel="stylesheet" href="responsive.css">
+
+</head>
+<body>
+  <div id="wrapper">
+
+  <header role="banner">  
+      <h1 class="tagline">Select the best book for your bookclub.</h1>
+  </header>
+  <br>
+  <br>
+  <main role="main">
+
+  <section role="region">
+    <div class="row">
+      <div class="col-12">
+          <form id="js-inputform">
+            <h4 > Check by Author, Title or Subject</h4><br>
+            <input type="text" id="js-searchfield" name="searchfield" placeholder="Book Title.." autofocus required spellcheck="true">
+              <input type="submit"  class="get-the-book-btn">
+                  getTheBook</input>
+          </form>
+          <br>
+            <div class="verbage">
+                <h3>After being presented with a list of books based on your selection, choose one.  You will be shown information on the book, the price, and articles and videos on the book, author or topic.</h3>
+                <div id='js-error-message'></div>
+            </div>
+      </div>
+    </div>
+  </section>
+
+  <section role="region">
+    <div class="row">
+      <div class='content'>
+      </div>
+    </div>  
+
+    <div class="row">
+  </div>
+
+</section>
+  </main>
+
+    <footer role="contentinfo">
+    </footer>
+     
+  </div>
+    <script src="https://code.jquery.com/jquery-3.1.0.min.js"></script>
+    <script src="index.js"></script>      
+</body>
+</html>

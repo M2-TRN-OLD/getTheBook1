@@ -1,0 +1,109 @@
+* {
+  box-sizing:border-box;
+}
+/* Generic Classes */
+
+body {
+  font-family: sans-serif;
+  width:1200px;
+  margin:auto;
+}
+
+.boxshadow {
+  border: 1px solid black; 
+  padding:10px;
+}
+
+
+.overviewdetail {
+  float: left;
+}
+
+.booklisttitle {
+  border-width: 1px solid green;
+  padding:5px;
+  margin:0 0 10px 0;
+}
+
+.listofbookstable {
+  display:table;
+  width:100%;
+  text-align:left;
+  margin:.5%;
+}
+
+.book {
+  float:left;
+  width:50%;
+  padding:3px;
+  height:216px;
+}
+
+.book:hover {
+  cursor:pointer;
+  background-color:lightgray;
+}
+
+.bookthumbtable-cell {
+  display:table-cell;
+  width:33.33%;
+  vertical-align:middle;
+}
+
+.listofbookstable-cell {
+  display:table-cell;
+  width:66.66%;
+  padding-left:6px;
+}
+.listofbooksthumb {
+  display:inline-block;
+  height:192px;
+  width:128px;
+
+}
+
+.indbooktable-cell {
+  display:table-cell;
+  vertical-align:top;
+  width:85%;
+  padding-left:10px;
+  
+}
+.indbookheaderinfo {
+  display:inline-block;
+  font-size: 14px;
+  text-align: left;
+  padding: 0 0 10px 10px;
+  color:  #a54132;
+}
+
+.indbookbodyinfo {
+  float:left;
+  padding:5px 10px 5px 12px;
+}
+
+.pub-style {
+  padding:0 3px 5px 0;
+  width: 100%;
+}
+
+.pubwords, .genwords, .ratingwords {
+  float:left;
+  font-weight:bold;
+  padding-right:5px;
+}
+
+.pubdata, 
+.gendata, 
+.ratingdata {
+  padding-right:5px;
+  text-align:left;
+}
+
+.desc-style {
+  font-size: 12px;
+  color:  #0B4863;
+  margin-top:5px;
+  text-align:left;
+}
+
