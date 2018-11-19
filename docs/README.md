@@ -1,2 +1,2 @@
 # getTheBook
-To be used by bookclubs, Get the Book provides reviews of a particular book, whether it is available at the local library and where it is available for purchase.
+To be used by bookclubs, getTheBook provides a number of pieces of information about a book, an author or a subject, to help bookclub members sort through possible book choices to make a selection for an upcoming read.  Information includes:  basic data about a book choice including summer and whether it is available for sale from Google books, any YouTube videos or articles that pertain to the selection and biographical data about the author.
