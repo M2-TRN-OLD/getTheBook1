@@ -290,7 +290,6 @@ const googleList = function getGoogleBooksAPIData(userSelectedSearchTerm) {
           throw new Error(response.text);
         })
         .then(googleJsonResp => {
-          //console.log(`this is the new fetch ${JSON.stringify(googleJsonResp)}`);
           showListH();
           showList(googleJsonResp);
         })
@@ -320,7 +319,6 @@ const listNext = function getGoogleBooksAPINextList(userSelectedSearchTerm) {
       throw new Error(response.text);
     })
     .then(googleJsonResp => {
-      //console.log(`this is another fetch ${JSON.stringify(googleJsonResp)}`);
       showListH();
       showList(googleJsonResp);
     })
@@ -340,39 +338,27 @@ const googleBook = function getSelectedGoogleBookAPIData(book) {
     //const googleQueryStr = formatQueryParams(params);
     const singleBookUrl = googleBooksURL + '/' + book + '?key=AIzaSyBpAvj7qUWfzUvniX__WEqh8iN5AUphs6s';
     console.log(singleBookUrl);
-/*
-    fetch(singleBookUrl, {
-        method: 'GET',
-        headers: {
-        "Accept": "application/json",
-        'Content-Type': 'application/json'
-        }
-      })
+
+    fetch(singleBookUrl)
       .then(response => {
         if (response.ok) {
-          return response.json;
+          return response.json();
         }
         throw new Error(response.text);
       })
       .then (singleBookJsonResp => {
-        console.log($(JSON.stringify(singleBookJsonResp.data)));
+        userSelectedAuthor = singleBookJsonResp.volumeInfo.authors;
+        showBookH();
+        showBook(singleBookJsonResp);
+        nextPageToken = singleBookJsonResp.nextPageToken;
+        showYtH();
+        showNewsH();
+        showWikiH();
       })
       .catch (err => {
         $('#js-error-message').text(`Something went terribly wrong with the single book selection: ${err.message}`);
       });
 
-*/
-
-
-    $.getJSON(singleBookUrl, function(selectedBookData){
-      userSelectedAuthor = selectedBookData.volumeInfo.authors;
-      showBookH();
-      showBook(selectedBookData);
-      nextPageToken = selectedBookData.nextPageToken;
-      showYtH();
-      showNewsH();
-      showWikiH();
-    });
 }
 
 //call to Youtube for videos
@@ -396,9 +382,8 @@ const getYt = function getYouTubeAPIData(userSelectedSearchTerm) {
           throw new Error(response.text);
         })
         .then(ytJsonResp => {
-          //console.log(JSON.stringify(ytJsonResp));
           showYt(ytJsonResp);
-          state.youtubePageToken = data.nextPageToken;
+          state.youtubePageToken = ytJsonResp.nextPageToken;
         })
         .catch(err => {
           $('#js-error-message').text(`Something went wrong with the youtube:  ${err.message}`);
@@ -479,11 +464,9 @@ const newsNext = function getNewsDataNextPage(userSelectedSearchTerm) {
     language: 'en',
     page: state.newsNextPage
     }
-    console.log('current page is ' + params.page);
 
   const newsNextQueryStr = formatQueryParams(params);
   const newsNextUrl = newsURL + '?' + newsNextQueryStr;
-  console.log(newsNextUrl);
 
   fetch(newsNextUrl)
     .then(response => {
@@ -493,7 +476,6 @@ const newsNext = function getNewsDataNextPage(userSelectedSearchTerm) {
       throw new Error(response.text);
     })
     .then(newsNextJsonResp => {
-      //console.log(JSON.stringify(newsNextJsonResp));
       showNews(newsNextJsonResp);
     })
     .catch(err => {
@@ -501,7 +483,6 @@ const newsNext = function getNewsDataNextPage(userSelectedSearchTerm) {
     });
 
     state.newsNextPage++;
-    console.log('after updating newsNextPage, page is ' + state.newsNextPage);
 }
 
 //AJAX call to Youtube for next set of data
@@ -521,26 +502,17 @@ const ytNext = function getYoutubeDataNextPage(userSelectedSearchTerm){
   fetch (ytNextUrl)
     .then(response => {
       if (response.ok) {
-        return response.json;
+        return response.json();
       }
       throw new Error(response.text);
     })
     .then(ytNextJsonResp => {
-      console.log(JSON.stringify(ytNextJsonResp));
-      //showYt(ytNextJsonResp);
+      showYt(ytNextJsonResp);
+      state.youtubePageToken = ytNextJsonResp.nextPageToken;
     })
     .catch (err => {
       $('#js-error-message').text(`something went terribly wrong with the Youtube Next data:  ${err.message}`);
     });
-
-    //state.youtubePageToken = data.nextPageToken;
-    //console.log(state.youtubePageToken);
-
-
-  //$.getJSON(youtubeURL, params, function(data){
-  //  showYt(data);
-   // state.youtubePageToken = data.nextPageToken;
-  //});
 }
 
 /* Event listeners */
